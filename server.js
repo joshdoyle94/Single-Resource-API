@@ -7,6 +7,7 @@ const express = require('express') // import express
 
 const path = require('path') // import path module
 const MovieRouter = require('./controllers/movieControllers')
+const UserRouter = require('./controllers/userController')
 const middleware = require('./utils/middleware')
 
 /////////////////////////////////////////////////
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 // app.use, when we register a route, needs two arguments
 // the first, is the base url endpoint, the second is the file to use
 app.use('/movies', MovieRouter)
+app.use('/users', UserRouter)
 
 
 //////////////////////////////////////////////
