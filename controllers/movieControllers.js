@@ -40,7 +40,7 @@ router.get("/:id", (req, res) => {
       // send error as json if they aren't
       .catch(err => res.json(err))
 })
-  
+ 
 // create route
 router.post("/", (req, res) => {
     // create the new movie
