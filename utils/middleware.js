@@ -4,8 +4,8 @@
 require("dotenv").config() // Load ENV Variables
 const morgan = require('morgan') // import morgan
 const express = require('express') // import express
-// const session = require('express-session')
-// const MongoStore = require('connect-mongo')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 /////////////////////////////////////////////
 // Middleware function
@@ -18,6 +18,16 @@ const middleware = (app) => {
     // we need to set up a session function and pass that function an object as 
     // an argument, that argument object will tell express session how to build
     // our session
+    app.use(
+        session({
+            secret: process.env.SECRET,
+            store: MongoStore.create({
+                mongoUrl: process.env.DATABASE_URL
+            }),
+            saveUninitialized: true,
+            resave: false
+        })
+    )
 }
 
 /////////////////////////////////////////////
