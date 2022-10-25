@@ -1,0 +1,30 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+  <div class="container-sm">
+    {%- comment -%}
+      change the action
+    {%- endcomment -%}
+    {%- comment -%}
+      add values to input fields
+    {%- endcomment -%}
+    {%- comment -%}
+      add a back button
+    {%- endcomment -%}
+    <form action="/movies/{{movie.id}}?_method=PUT" method="POST">
+      <fieldset>
+        <legend>Edit
+          {{movie.name}}
+        </legend>
+        <label class="form-label">Name:
+        </label>
+        <input class="form-control" type="text" name="name" placeholder="enter the title of the movie" value="{{ movie.name }}">
+        <label class="form-label">Color:
+        </label>
+        <input class="form-control" type="text" name="genre" placeholder="what genre is the movie?" value="{{ movie.genre }}">
+      </fieldset>
+      <input class="btn btn-success" type="submit" value="Edit {{movie.name}}">
+    </form>
+  </div>
+
+{% endblock %}

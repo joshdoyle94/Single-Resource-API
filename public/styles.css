@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.card {
+    margin: 8px;
+    color: black;
+    background-color: rgba(229, 247, 146, 0.773);
+}
+
+.showMovie {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.colorBox {
+    width: 25%;
+    height: 25%;
+    border: 1px solid rgb(250, 247, 247);
+}
+
+.edit-btn {
+    background-color: grey;
+    color: black;
+}

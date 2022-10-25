@@ -1,0 +1,32 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  {% if movies.length > 0%}
+    <div>
+      <h2 class="display-6">All Movies</h2>
+      <div class="row">
+        {% for movie in movies %}
+          <div class="card" style="width: 22rem; height: 18rem;">
+            <h5 class="card-header">{{movie.name}}
+            </h5>
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">The genre of
+                {{movie.name}}
+                is
+                {{movie.genre}}
+              </p>
+              <a class="btn edit-btn" href="/movies/{{movie.id}}">
+                View
+                {{movie.name}}
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div>
+      <h2 class="display-6">No movies yet... time to add some!</h2>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -2,6 +2,8 @@
 // Import Our Dependencies
 /////////////////////////////////////////////
 const mongoose = require('./connection')
+const User = require('./user')
+const commentSchema = require('./comment')
 
 ////////////////////////////////////////////////
 // Our Models
@@ -13,8 +15,13 @@ const { Schema, model } = mongoose
 const moviesSchema = new Schema({
   name: String,
   genre: String,
-  imdbRating: Number
-})
+  imdbRating: Number,
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  comments: [commentSchema]
+}, {timestamps: true})
 
 // make movie model
 const Movie = model("Movie", moviesSchema)

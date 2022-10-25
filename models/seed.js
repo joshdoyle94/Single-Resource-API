@@ -5,7 +5,7 @@ const mongoose = require('./connection')
 const Movie = require('./movie')
 
 ///////////////////////////////////////////
-// Seed Code
+// Seed Script Code
 ////////////////////////////////////////////
 // save the connection in a variable
 const db = mongoose.connection
@@ -22,23 +22,27 @@ db.on('open', () => {
 
 	// when we seed data, there are a few steps involved
 	// delete all the data that already exists(will only happen if data exists)
-	Movie.deleteMany({})
+    Movie.deleteMany({})
         .then(deletedMovies => {
-		    console.log('this is what remove returns', deletedMovies)
-		    // then we create with our seed data
+            console.log('this is what .remove returns', deletedMovies)
+
+            // create a bunch of new fruits from startFruits
             Movie.create(startMovies)
                 .then(data => {
-                    console.log('Here are the new seed movies', data)
+                    console.log('here are the newly created movies', data)
+                    // always close connection to the db
                     db.close()
                 })
                 .catch(error => {
                     console.log(error)
+                    // always close connection to the db
                     db.close()
                 })
-	    })
+        })
         .catch(error => {
             console.log(error)
+            // always close connection to the db
             db.close()
         })
-    
+    // replace all of them with the startMovies
 })

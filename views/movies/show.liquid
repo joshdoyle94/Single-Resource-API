@@ -1,0 +1,59 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="showMovie">
+    <div class="container-md">
+      <article>
+        <h2>{{movie.name}}
+        </h2>
+        <h4>The genre of this movie is:
+          {{movie.genre}}
+        </h4>
+        {% if movie.owner == userId %}
+          <div class="btn-group">
+            {%- comment -%}
+              first button will send us to the edit page
+            {%- endcomment -%}
+            <a class="btn btn-primary" href="/movies/edit/{{movie.id}}">Edit</a>
+            {%- comment -%}
+              the second button(which will actually be a form, will send a DELETE request)
+            {%- endcomment -%}
+            <form action="/movies/{{movie.id}}?_method=DELETE" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </div>
+        {% endif %}
+      </article>
+      <hr>
+      <h4>comments</h4>
+      <hr>
+      {% if loggedIn %}
+        <div>
+          <form action="/comments/{{movie.id}}" method="POST">
+            <fieldset>
+              <legend>Add Comment</legend>
+              <label class="form-label">comment:</label>
+              <input class="form-control mb-1" type="text" placeholder="enter your comment..." name="note" required>
+            </fieldset>
+            <input class="btn btn-success" type="submit" value="add comment">
+          </form>
+        </div>
+      {% else %}
+        <div class="col-md-6">
+          <small>If you'd like to leave a comment, please log in...</small>
+        </div>
+      {% endif %}
+      <hr>
+      {% if movie.comments.length > 0%}
+        <div class="container-sm justify-content-center">
+          <div class="col-md-8 col-lg-6">
+            {% for comment in movie.comments %}
+              {% render '../comment.liquid', comment: comment, userId: userId, movie: movie %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <small>no comments yet...</small>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
