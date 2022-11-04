@@ -34,7 +34,33 @@ router.get("/", (req, res) => {
         .catch(err => res.redirect(`/error?error=${err}`))
 })
 
+// GET request
+// only movies owned by logged in user
+// we're going to build another route, that is owner specific, to list all the fruits owned by a certain(logged in) user
+router.get('/mine', (req, res) => {
+    // find the fruits, by ownership
+    Movie.find({ owner: req.session.userId })
+    // then display the fruits
+        .then(movies => {
+            const username = req.session.username
+            const loggedIn = req.session.loggedIn
+            const userId = req.session.userId
 
+            // res.status(200).json({ fruits: fruits })
+            res.render('movies/index', { movies, username, loggedIn, userId })
+        })
+    // or throw an error if there is one
+        .catch(err => res.redirect(`/error?error=${err}`))
+})
+
+// create route
+router.get('/new', (req, res) => {
+    const username = req.session.username
+    const loggedIn = req.session.loggedIn
+    const userId = req.session.userId
+
+    res.render('movies/new', { username, loggedIn, userId })
+})
 
 // Show route
 router.get("/:id", (req, res) => {
@@ -54,15 +80,6 @@ router.get("/:id", (req, res) => {
             res.render('movies/show', { movie, username, loggedIn, userId })
         })
         .catch(err => res.redirect(`/error?error=${err}`))
-})
- 
-// create route
-router.get('/new', (req, res) => {
-    const username = req.session.username
-    const loggedIn = req.session.loggedIn
-    const userId = req.session.userId
-
-    res.render('movies/new', { username, loggedIn, userId })
 })
 
 // POST request
@@ -85,25 +102,6 @@ router.post("/", (req, res) => {
             // res.status(201).json({ fruit: fruit.toObject() })
             res.redirect('/movies')
         })
-        .catch(err => res.redirect(`/error?error=${err}`))
-})
-
-// GET request
-// only movies owned by logged in user
-// we're going to build another route, that is owner specific, to list all the fruits owned by a certain(logged in) user
-router.get('/mine', (req, res) => {
-    // find the fruits, by ownership
-    Movie.find({ owner: req.session.userId })
-    // then display the fruits
-        .then(movies => {
-            const username = req.session.username
-            const loggedIn = req.session.loggedIn
-            const userId = req.session.userId
-
-            // res.status(200).json({ fruits: fruits })
-            res.render('movies/index', { movies, username, loggedIn, userId })
-        })
-    // or throw an error if there is one
         .catch(err => res.redirect(`/error?error=${err}`))
 })
 
